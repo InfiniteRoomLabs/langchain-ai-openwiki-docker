@@ -72,6 +72,10 @@ Tags: version tags (e.g. `0.1.1`) are built from the upstream release tag of the
 - **Personal mode / connectors**: OpenWiki's personal-brain mode with OAuth connectors (Gmail, Slack, Notion, X) expects a local browser and loopback callbacks. That's awkward inside a container; this image targets **code mode** (repository documentation). Use a native install for personal mode.
 - **Scheduling**: upstream's macOS LaunchAgent schedules don't apply in a container. Schedule with cron/CI instead - upstream ships [CI examples](https://github.com/langchain-ai/openwiki/tree/main/examples) for exactly this.
 
+## Shell wrapper
+
+[`contrib/openwiki.fish`](./contrib/openwiki.fish) is a fish function that makes the container feel like a native install: run `openwiki` from any repo and it mounts the current directory, persists config in a named volume, forwards provider env vars (`OPENWIKI_*`, `ANTHROPIC_*`, `OPENAI_*`, `OPENROUTER_*`, `LANGSMITH_*`, `TAVILY_*`), allocates a TTY only when you're at one, and pins the image by digest. Copy it to `~/.config/fish/functions/openwiki.fish`. It assumes host UID 1000; for other UIDs use the explicit `--user` invocation from the notes above.
+
 ## Building locally
 
 ```sh

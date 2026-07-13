@@ -14,3 +14,4 @@ Wrapper versions track the upstream openwiki release they package.
 - Multi-stage Dockerfile building [langchain-ai/openwiki](https://github.com/langchain-ai/openwiki) from a submodule pinned to the upstream `0.1.1` release tag (node:22-bookworm-slim, non-root UID 1000, git + ripgrep in the runtime, upstream LICENSE shipped in the image, OCI source/license labels).
 - GitHub Actions workflow publishing `deathnerd/openwiki` for linux/amd64 and linux/arm64; pull requests build without pushing, actions pinned to commit SHAs.
 - README covering interactive and one-shot usage, config persistence, UID-mismatch handling, and container-specific limitations.
+- `contrib/openwiki.fish`: digest-pinned fish wrapper that runs the container against the current directory with persistent config and provider env-var forwarding.

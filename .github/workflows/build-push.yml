@@ -3,6 +3,10 @@ name: build-and-push
 on:
   push:
     branches: [main]
+    # Docs/wrapper-only commits must not republish and move the image digest.
+    paths-ignore:
+      - 'contrib/**'
+      - '**.md'
   pull_request:
   workflow_dispatch:
 
