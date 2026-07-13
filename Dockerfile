@@ -33,6 +33,11 @@ COPY --from=build /app/LICENSE /opt/openwiki/LICENSE
 COPY --from=build /app/node_modules /opt/openwiki/node_modules
 COPY --from=build /app/dist /opt/openwiki/dist
 
+# Host-side install scripts, extractable by scripts/install.sh bootstraps.
+COPY scripts/openwiki-setup.sh /opt/openwiki/host/openwiki-setup.sh
+COPY scripts/lib/ /opt/openwiki/host/lib/
+COPY scripts/completions/ /opt/openwiki/host/completions/
+
 LABEL org.opencontainers.image.title="openwiki" \
       org.opencontainers.image.description="Docker packaging of langchain-ai/openwiki, the DeepAgents-powered codebase wiki CLI" \
       org.opencontainers.image.source="https://github.com/InfiniteRoomLabs/langchain-ai-openwiki-docker" \

@@ -74,7 +74,13 @@ Tags: version tags (e.g. `0.1.1`) are built from the upstream release tag of the
 
 ## Shell wrapper
 
-[`contrib/openwiki.fish`](./contrib/openwiki.fish) is a fish function that makes the container feel like a native install: run `openwiki` from any repo and it mounts the current directory, persists config in a named volume, forwards provider env vars (`OPENWIKI_*`, `ANTHROPIC_*`, `OPENAI_*`, `OPENROUTER_*`, `LANGSMITH_*`, `TAVILY_*`), allocates a TTY only when you're at one, and pins the image by digest. Copy it to `~/.config/fish/functions/openwiki.fish`. It assumes host UID 1000; for other UIDs use the explicit `--user` invocation from the notes above.
+The installer sets up an `openwiki` shell function (fish, bash, or zsh) plus completions, so the container feels like a native install:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/InfiniteRoomLabs/langchain-ai-openwiki-docker/main/scripts/install.sh | sh
+```
+
+The wrapper mounts the current directory, persists config in a named volume, forwards provider env vars (`OPENWIKI_*`, `ANTHROPIC_*`, `OPENAI_*`, `OPENROUTER_*`, `LANGSMITH_*`, `TAVILY_*`, `BASETEN_*`, `FIREWORKS_*`), allocates a TTY only when you're at one, and pins the image by digest resolved at install time. After a new release, `openwiki-setup update` re-resolves the pin; `openwiki-setup uninstall` removes everything (your config volume is kept). It assumes host UID 1000; for other UIDs use the explicit `--user` invocation from the notes above.
 
 ## Building locally
 
@@ -84,8 +90,8 @@ cd langchain-ai-openwiki-docker
 docker build -t openwiki:local .
 ```
 
-To bump the upstream version: move the submodule pin to the new release tag, commit, and CI rebuilds and pushes.
+Releases are cut by tagging: a `vX.Y.Z` tag matching the upstream version pinned in the submodule triggers the publish workflow (multi-arch, Docker Hub + ghcr.io). Pushing `main` only runs a build check. Maintainers: see [CLAUDE.md](https://github.com/InfiniteRoomLabs/langchain-ai-openwiki-docker/blob/main/CLAUDE.md) for the release process.
 
 ## License
 
-OpenWiki is [MIT-licensed](https://github.com/langchain-ai/openwiki/blob/main/LICENSE) by its authors; the upstream license also ships inside the image at `/opt/openwiki/LICENSE`. The packaging files in this repo (Dockerfile, workflow, this README) are MIT as well - see [LICENSE](./LICENSE).
+OpenWiki is [MIT-licensed](https://github.com/langchain-ai/openwiki/blob/main/LICENSE) by its authors; the upstream license also ships inside the image at `/opt/openwiki/LICENSE`. The packaging files in this repo (Dockerfile, workflow, this README) are MIT as well - see [LICENSE](https://github.com/InfiniteRoomLabs/langchain-ai-openwiki-docker/blob/main/LICENSE).
