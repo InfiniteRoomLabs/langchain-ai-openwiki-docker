@@ -5,7 +5,7 @@ Docker packaging wrapper for [langchain-ai/openwiki](https://github.com/langchai
 ## Layout
 
 - `Dockerfile` - multi-stage build of the vendored submodule; host-side scripts are baked into `/opt/openwiki/host/`.
-- `scripts/openwiki-setup.sh` - user-facing installer (wrapper function + completions, digest-pinned). `scripts/install.sh` / `uninstall.sh` are curl-able bootstraps for it.
+- `scripts/openwiki-setup.sh` - user-facing installer (wrapper function + completions, digest-pinned) plus `schedule`/`unschedule` for a systemd user timer (Linux analog of upstream's macOS LaunchAgents). `scripts/install.sh` / `uninstall.sh` are curl-able bootstraps for it.
 - `scripts/lib/openwiki-fn.{fish,bash}` - wrapper function templates; `__REF__` is substituted with the resolved image ref at install time. The repo never hardcodes an image digest.
 - `scripts/cut-release.sh` - maintainer release tool (see below).
 - `.github/workflows/ci.yml` - build-only check on main/PRs. `publish.yml` - publishes on `v*` tags only.

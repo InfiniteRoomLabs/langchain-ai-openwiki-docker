@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `OPENWIKI_DOCKER_ARGS` support in the wrapper templates: extra docker args (e.g. read-only source mounts for personal mode) without editing the managed function.
+- `openwiki-setup schedule`/`unschedule`: systemd user timer for daily personal-wiki refresh, with the digest pin and source mounts baked into the generated unit.
+
 ## [0.1.1] - 2026-07-13
 
 Wrapper versions track the upstream openwiki release they package. This is the first tagged release of the packaging repo.

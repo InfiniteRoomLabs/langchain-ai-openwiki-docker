@@ -21,6 +21,13 @@ openwiki() {
         _ow_args+=(-e "$v") ;;
     esac
   done
+  # Extra docker args (e.g. read-only source mounts for personal mode):
+  # export OPENWIKI_DOCKER_ARGS="-v $HOME/notes:/sources/notes:ro"
+  if [ -n "${OPENWIKI_DOCKER_ARGS:-}" ]; then
+    local _ow_extra
+    read -r -a _ow_extra <<< "${OPENWIKI_DOCKER_ARGS}"
+    _ow_args+=("${_ow_extra[@]}")
+  fi
   docker run --rm "${_ow_args[@]}" \
     -v openwiki-config:/home/openwiki/.openwiki \
     -v "$(pwd):/workspace" \

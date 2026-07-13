@@ -15,7 +15,13 @@ function openwiki
     for v in (set --export --names | string match -r '^(OPENWIKI|ANTHROPIC|OPENAI|OPENROUTER|LANGSMITH|TAVILY|BASETEN|FIREWORKS)_.*')
         set -a _ow_env -e $v
     end
-    docker run --rm $_ow_tty $_ow_env \
+    # Extra docker args (e.g. read-only source mounts for personal mode):
+    # set -gx OPENWIKI_DOCKER_ARGS "-v $HOME/notes:/sources/notes:ro"
+    set -l _ow_extra
+    if set -q OPENWIKI_DOCKER_ARGS
+        set _ow_extra (string split -n ' ' -- $OPENWIKI_DOCKER_ARGS)
+    end
+    docker run --rm $_ow_tty $_ow_env $_ow_extra \
         -v openwiki-config:/home/openwiki/.openwiki \
         -v (pwd)":/workspace" \
         __REF__ $argv

@@ -82,6 +82,14 @@ curl -fsSL https://raw.githubusercontent.com/InfiniteRoomLabs/langchain-ai-openw
 
 The wrapper mounts the current directory, persists config in a named volume, forwards provider env vars (`OPENWIKI_*`, `ANTHROPIC_*`, `OPENAI_*`, `OPENROUTER_*`, `LANGSMITH_*`, `TAVILY_*`, `BASETEN_*`, `FIREWORKS_*`), allocates a TTY only when you're at one, and pins the image by digest resolved at install time. After a new release, `openwiki-setup update` re-resolves the pin; `openwiki-setup uninstall` removes everything (your config volume is kept). It assumes host UID 1000; for other UIDs use the explicit `--user` invocation from the notes above.
 
+Extra container args (e.g. read-only source mounts for personal mode) go in `OPENWIKI_DOCKER_ARGS`:
+
+```sh
+export OPENWIKI_DOCKER_ARGS="-v $HOME/notes:/sources/notes:ro"
+```
+
+For scheduled wiki refreshes on Linux (upstream's scheduler is macOS-only), `openwiki-setup schedule [--time HH:MM]` installs a systemd user timer that runs `personal --update --print` daily with your source mounts and digest pin baked in; `openwiki-setup unschedule` removes it. Re-run `schedule` after `update` or after changing mounts.
+
 ## Building locally
 
 ```sh
