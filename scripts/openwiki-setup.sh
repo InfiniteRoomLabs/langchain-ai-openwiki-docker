@@ -329,7 +329,7 @@ Description=OpenWiki personal wiki refresh
 
 [Service]
 Type=oneshot
-ExecStart=$([ -x /usr/bin/docker ] && echo /usr/bin/docker || command -v docker) run --rm ${OPENWIKI_DOCKER_ARGS:-} -v openwiki-config:/home/openwiki/.openwiki ${_ref} personal --update --print "Refresh the wiki from configured connectors"
+ExecStart=$([ -x /usr/bin/docker ] && echo /usr/bin/docker || command -v docker) run --rm ${OPENWIKI_DOCKER_ARGS:-} -v ${HOME}/.openwiki:/home/openwiki/.openwiki ${_ref} personal --update --print "Refresh the wiki from configured connectors"
 EOF
         cat > "${UNIT_DIR}/openwiki-refresh.timer" <<EOF
 [Unit]
@@ -379,8 +379,7 @@ cmd_uninstall() {
     remove_completion
     run rm -f "${BIN_DIR}/openwiki-setup"
     [ "${DRY_RUN}" = "1" ] || rmdir "${COMP_DIR}" "${DATA_DIR}" 2>/dev/null || true
-    success "Removed. The 'openwiki-config' docker volume (your config/API keys) was kept."
-    info "Remove it with: docker volume rm openwiki-config"
+    success "Removed. ~/.openwiki (your wiki, config, and API keys) was kept."
 }
 
 parse_args "$@"

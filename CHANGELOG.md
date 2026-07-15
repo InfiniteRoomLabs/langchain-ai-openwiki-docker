@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The wrapper and systemd unit now persist config and the wiki at `~/.openwiki` on the host (bind mount) instead of a named docker volume - the wiki is plain files, usable as an Obsidian vault or grepped by other tools. Existing named-volume users: copy the volume contents to `~/.openwiki` before updating (`docker run --rm -v openwiki-config:/src:ro -v $HOME/.openwiki:/dst deathnerd/openwiki sh -c "cp -a /src/. /dst/"` with `--entrypoint sh`).
+
 ### Added
 
 - `OPENWIKI_DOCKER_ARGS` support in the wrapper templates: extra docker args (e.g. read-only source mounts for personal mode) without editing the managed function.

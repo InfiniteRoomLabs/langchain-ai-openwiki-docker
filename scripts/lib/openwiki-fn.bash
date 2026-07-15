@@ -28,8 +28,9 @@ openwiki() {
     read -r -a _ow_extra <<< "${OPENWIKI_DOCKER_ARGS}"
     _ow_args+=("${_ow_extra[@]}")
   fi
+  mkdir -p "${HOME}/.openwiki"
   docker run --rm "${_ow_args[@]}" \
-    -v openwiki-config:/home/openwiki/.openwiki \
+    -v "${HOME}/.openwiki:/home/openwiki/.openwiki" \
     -v "$(pwd):/workspace" \
     __REF__ "$@"
 }

@@ -21,8 +21,9 @@ function openwiki
     if set -q OPENWIKI_DOCKER_ARGS
         set _ow_extra (string split -n ' ' -- $OPENWIKI_DOCKER_ARGS)
     end
+    mkdir -p "$HOME/.openwiki"
     docker run --rm $_ow_tty $_ow_env $_ow_extra \
-        -v openwiki-config:/home/openwiki/.openwiki \
+        -v "$HOME/.openwiki:/home/openwiki/.openwiki" \
         -v (pwd)":/workspace" \
         __REF__ $argv
 end

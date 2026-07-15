@@ -80,7 +80,7 @@ The installer sets up an `openwiki` shell function (fish, bash, or zsh) plus com
 curl -fsSL https://raw.githubusercontent.com/InfiniteRoomLabs/langchain-ai-openwiki-docker/main/scripts/install.sh | sh
 ```
 
-The wrapper mounts the current directory, persists config in a named volume, forwards provider env vars (`OPENWIKI_*`, `ANTHROPIC_*`, `OPENAI_*`, `OPENROUTER_*`, `LANGSMITH_*`, `TAVILY_*`, `BASETEN_*`, `FIREWORKS_*`), allocates a TTY only when you're at one, and pins the image by digest resolved at install time. After a new release, `openwiki-setup update` re-resolves the pin; `openwiki-setup uninstall` removes everything (your config volume is kept). It assumes host UID 1000; for other UIDs use the explicit `--user` invocation from the notes above.
+The wrapper mounts the current directory, persists config and the wiki at `~/.openwiki` on the host (plain files - open the wiki in Obsidian or grep it), forwards provider env vars (`OPENWIKI_*`, `ANTHROPIC_*`, `OPENAI_*`, `OPENROUTER_*`, `LANGSMITH_*`, `TAVILY_*`, `BASETEN_*`, `FIREWORKS_*`), allocates a TTY only when you're at one, and pins the image by digest resolved at install time. After a new release, `openwiki-setup update` re-resolves the pin; `openwiki-setup uninstall` removes everything (`~/.openwiki` is kept). It assumes host UID 1000; for other UIDs use the explicit `--user` invocation from the notes above.
 
 Extra container args (e.g. read-only source mounts for personal mode) go in `OPENWIKI_DOCKER_ARGS`:
 
